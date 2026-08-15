@@ -24,7 +24,7 @@ pub struct PublicationInfo {
     pub doi: Option<Doi>,
     pub kind: PubKind,
     pub abstract_text: Option<String>,
-    pub provenance: Vec<Provenance>,
+    pub provenance: Vec<Provenance>, //TODO: DEFINE POPULATE PROVENANCE LOGIC
 }
 
 pub trait Rules{
