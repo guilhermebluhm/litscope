@@ -33,7 +33,7 @@ pub fn processar_requisicao(criterio: &str, iteracoes: u8) -> Result<DblpResult,
 
                 }
             }
-            Err(err) => {
+            Err(err) => { //TODO MELHORAR A LOGICA DO CLIENT AQUI NO BRAÇO DO ERR
                 if err.is_timeout(){
                     errors.push(FalhaGeralProcessarRequisicaoHttp(err.status().unwrap().as_u16()))
                 }

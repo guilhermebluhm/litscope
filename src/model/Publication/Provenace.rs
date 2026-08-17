@@ -1,9 +1,9 @@
+use std::time::Instant;
 use crate::model::Publication::SourceId::SourceId;
 
 #[derive(Debug)]
 pub struct Provenance{
     pub source: SourceId,
-    pub native_id: String,
-    pub fetched_at: i64,
+    pub fetched_at: Instant,
     pub query: String,
 }

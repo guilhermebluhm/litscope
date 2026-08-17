@@ -1,3 +1,4 @@
+use std::time::Instant;
 use crate::model::Dblp::DblpHitNestedContent::DblpHitNestedContent;
 use crate::model::Dblp::DblpInfo::DblpInfo;
 use crate::model::Dblp::DblpResult::DblpResult;
@@ -6,6 +7,7 @@ use crate::model::Publication::Doi::Doi;
 use crate::model::Publication::Provenace::Provenance;
 use crate::model::Publication::PubKey::PubKey;
 use crate::model::Publication::PubKind::PubKind;
+use crate::model::Publication::SourceId::SourceId;
 use crate::model::Publication::Venue::Venue;
 use crate::utils::CheckValidDOI::check_valid;
 use crate::utils::PubKindMatchers::pub_kind_matchers;
@@ -28,11 +30,11 @@ pub struct PublicationInfo {
 }
 
 pub trait Rules{
-    fn normalize_and_produce_publication(type_from: DblpResult) -> Result<Vec<PublicationInfo>, String>;
+    fn normalize_and_produce_publication(type_from: DblpResult, data_query: &str) -> Result<Vec<PublicationInfo>, String>;
 }
 
-impl<'a> Rules for PublicationInfo{
-    fn normalize_and_produce_publication(type_from: DblpResult) -> Result<Vec<PublicationInfo>, String> {
+impl Rules for PublicationInfo{
+    fn normalize_and_produce_publication(type_from: DblpResult, data_query: &str) -> Result<Vec<PublicationInfo>, String> {
 
         let mut pub_vec:Vec<PublicationInfo> = Vec::new();
 
@@ -85,6 +87,16 @@ impl<'a> Rules for PublicationInfo{
         else{
             return Err("Hit objet not found or not mount correctly".to_string())
         }
+        
+        let length_pub = pub_vec.len()-1;
+        let publ = pub_vec.get_mut(length_pub).unwrap();
+
+        publ.provenance.push(Provenance{
+            source: SourceId::Dblp,
+            fetched_at: Instant::now(),
+            query: data_query.to_string(),
+        });
+
         Ok(pub_vec)
     }
 }
