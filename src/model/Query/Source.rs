@@ -11,7 +11,7 @@ pub struct SourceRegistry{
 pub trait Source {
     fn id(&self) -> SourceId;
     fn display_name(&self) -> &str;
-    fn search(&self, q: &Query, page: usize) -> Result<SearchPage, ErrorSupport>;
+    fn search(&self, q: &Query, page: usize) -> Result<SearchPage, Vec<ErrorSupport>>;
     fn min_interval(&self) -> Duration;
     fn max_page_size(&self) -> usize;
 }

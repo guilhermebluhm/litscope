@@ -1,3 +1,5 @@
 pub enum ErrorSupport{
-    FalhaGeralProcessarRequisicaoHttp(u16)
+    FalhaGeralProcessarRequisicaoHttp(String),
+    FalhaAoMontarQueryParam(String),
+    FalhaAoProcessarPublicationInfo(String),
 }

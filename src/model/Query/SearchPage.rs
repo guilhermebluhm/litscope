@@ -1,8 +1,7 @@
 use crate::model::Publication::PublicationInfo::PublicationInfo;
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct SearchPage {
     pub items: Vec<PublicationInfo>,
-    pub total: Option<u64>,
-    pub has_more: bool
+    pub has_more: bool, //avaliar a necessidade do atributo total (removido temporariamente)
 }
